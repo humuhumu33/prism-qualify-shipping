@@ -32,18 +32,6 @@
 spec = "template/1"
 
 [[id]]
-id = "SM-01"
-level = "build"
-suite = "shipping_method"
-statement = "The app always answers express when destination is worldwide"
-
-[[id]]
-id = "SM-02"
-level = "build"
-suite = "shipping_method"
-statement = "The app never answers standard when destination is worldwide"
-
-[[id]]
 id = "FR-01"
 level = "build"
 suite = "frame"
@@ -60,3 +48,15 @@ id = "FR-03"
 level = "build"
 suite = "frame"
 statement = "A first visit's bytes are counted once the page has started, the frame's and the app's each within its own budget"
+
+[[id]]
+id = "SM-01"
+level = "build"
+suite = "shipping_method"
+statement = "The app always answers express when destination is worldwide"
+
+[[id]]
+id = "SM-02"
+level = "build"
+suite = "shipping_method"
+statement = "The app never answers standard when destination is worldwide"
