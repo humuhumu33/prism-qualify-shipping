@@ -1,18 +1,18 @@
 {
-  "name": "Template contract",
-  "shortName": "Contract",
-  "live": "https://uor-foundation.github.io/template/",
-  "purpose": "Checks each universal policy file of a UOR template repository against its locked digest. Send the six expected and observed digests; it answers conformant, or names every file that drifted, and invalid request for anything else.",
-  "inputLabel": "Expected and observed digests",
-  "placeholder": "hex: followed by 384 bytes",
-  "submitLabel": "Check",
-  "outputLabel": "Verdict",
+  "name": "Shipping Method",
+  "shortName": "Shipping",
+  "live": "https://humuhumu33.github.io/prism-qualify-shipping/",
+  "purpose": "Decides express or standard from weight and destination. Send weight or destination, separated by spaces; it answers express or standard, and invalid request for anything else.",
+  "inputLabel": "Request: weight destination",
+  "placeholder": "0 worldwide",
+  "submitLabel": "Decide",
+  "outputLabel": "Answer",
   "answers": {
     "positive": [
-      "conformant"
+      "express"
     ],
     "negative": [
-      "drift:*"
+      "standard"
     ],
     "refusal": "invalid request"
   },
@@ -20,25 +20,36 @@
     "headline": "Says conformant exactly when every policy file matches its lock.",
     "detail": "Each of the six universal policy files is compared with the digest the lock records, and any file that drifted is named."
   },
-  "claim": "TC-01: the checker answers conformant exactly when every universal policy file's observed digest equals its locked digest.",
+  "claim": "SM-01: the app always answers express when destination is worldwide. SM-02: the app never answers standard when destination is worldwide.",
   "proposition": {
-    "name": "Conformant",
-    "text": "Conformant observation :=\n  SameDigest devcontainer.expected devcontainer.observed\n  /\\ SameDigest bootstrap.expected bootstrap.observed\n  /\\ SameDigest agents.expected agents.observed\n  /\\ SameDigest verification.expected verification.observed\n  /\\ SameDigest prismpmLock.expected prismpmLock.observed\n  /\\ SameDigest templateContract.expected templateContract.observed\n\nSameDigest left right :=\n  left.w0 = right.w0 /\\ left.w1 = right.w1 /\\ left.w2 = right.w2 /\\ left.w3 = right.w3",
-    "plain": "Every one of the six universal policy files has the digest the lock says it has."
+    "name": "judge",
+    "text": "judge request :=\n  destination is worldwide → express\n  weight is above 20 → express\n  otherwise → standard",
+    "plain": "Decides express or standard from weight and destination."
   },
   "theorems": [
     {
-      "name": "conformant_decides",
-      "statement": "conformant observation = true ↔ Conformant observation, for every observation",
-      "how": "Proved by simplification over the record fields, checked by the Lean kernel by prismpm verify in CI",
-      "where": "app/src/Contract.lex.tex"
+      "name": "inv001Holds",
+      "statement": "no request meets breaksInv001: the app always answers express when destination is worldwide",
+      "how": "Proved by linear arithmetic, checked by the Lean kernel on the UOR MCP server and again by prismpm verify in CI",
+      "where": "app/src/ShippingMethodProofs.lex.tex"
+    },
+    {
+      "name": "inv002Holds",
+      "statement": "no request meets breaksInv002: the app never answers standard when destination is worldwide",
+      "how": "Proved by linear arithmetic, checked by the Lean kernel on the UOR MCP server and again by prismpm verify in CI",
+      "where": "app/src/ShippingMethodProofs.lex.tex"
     }
   ],
   "pinned": [
     {
-      "name": "contract_tc_01",
-      "what": "The theorem's statement and axioms, the six files the proposition names against template-contract.json, that a drifted file is named in the verdict, and that the verdict is decided by conformant. A string-matching test, not a theorem: a planted defect fails it.",
-      "where": "crates/conformance/tests/contract.rs"
+      "name": "shipping_method_sm_01",
+      "what": "SM-01's condition and the theorem that no request meets it. A string-matching test, not a theorem: a planted defect fails it.",
+      "where": "crates/conformance/tests/shipping_method.rs"
+    },
+    {
+      "name": "shipping_method_sm_02",
+      "what": "SM-02's condition and the theorem that no request meets it. A string-matching test, not a theorem: a planted defect fails it.",
+      "where": "crates/conformance/tests/shipping_method.rs"
     }
   ],
   "trusted": [
@@ -65,14 +76,14 @@
   ],
   "attestations": {
     "proof": {
-      "id": "not recorded for the template's own app; an instance records the UOR MCP server's attestation here",
-      "url": "https://github.com/UOR-Foundation/template/actions/workflows/bootstrap.yml"
+      "id": "not recorded: the proof ran in the SDK image, not on the UOR MCP server",
+      "url": "https://github.com/humuhumu33/prism-qualify-shipping/actions/workflows/bootstrap.yml"
     },
     "build": {
-      "id": "printed by prismpm verify in every pages run; an instance records it here",
-      "url": "https://github.com/UOR-Foundation/template/actions/workflows/pages.yml"
+      "id": "printed by prismpm verify in every pages run",
+      "url": "https://github.com/humuhumu33/prism-qualify-shipping/actions/workflows/pages.yml"
     }
   },
-  "repository": "https://github.com/UOR-Foundation/template",
-  "report": "https://github.com/UOR-Foundation/template/blob/main/TEMPLATE-VERIFICATION.md"
+  "repository": "https://github.com/humuhumu33/prism-qualify-shipping",
+  "report": "https://github.com/humuhumu33/prism-qualify-shipping/blob/main/TEMPLATE-VERIFICATION.md"
 }

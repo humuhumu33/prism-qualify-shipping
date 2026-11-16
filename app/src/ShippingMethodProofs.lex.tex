@@ -1,0 +1,60 @@
+\begin{lexlean}{ShippingMethodProofs}
+\useglossary{lexlean.std.bool@1.2.0}
+\useglossary{lexlean.std.nat@1.2.0}
+\useglossary{prism.arch@1.0.0}
+\importmodule{ShippingMethod}
+\title{Text application model}
+\begin{semanticmodule}
+definition{
+  name: breaksInv001,
+  parameters: [request : ShippingMethod::Request],
+  result: Bool,
+  body: (((((project request weight) <=? 50) && ((project request destination) <? 2)) && ((project request destination) =? (ShippingMethod::destinationWorldwide))) && (not ((ShippingMethod::judge request) =? (ShippingMethod::answerExpress))))
+}
+
+theorem{
+  name: inv001Holds,
+  parameters: [request : ShippingMethod::Request],
+  statement: ((breaksInv001 request) = false),
+  proof: linear_arithmetic{
+    definitions: [
+      ShippingMethod::answerExpress,
+      ShippingMethod::answerStandard,
+      ShippingMethod::destinationDomestic,
+      ShippingMethod::destinationWorldwide,
+      ShippingMethod::judge,
+      ShippingMethod::rule1,
+      ShippingMethod::rule2,
+      breaksInv001
+    ]
+  },
+  axioms: [Quot.sound, propext]
+}
+
+definition{
+  name: breaksInv002,
+  parameters: [request : ShippingMethod::Request],
+  result: Bool,
+  body: (((((project request weight) <=? 50) && ((project request destination) <? 2)) && ((project request destination) =? (ShippingMethod::destinationWorldwide))) && ((ShippingMethod::judge request) =? (ShippingMethod::answerStandard)))
+}
+
+theorem{
+  name: inv002Holds,
+  parameters: [request : ShippingMethod::Request],
+  statement: ((breaksInv002 request) = false),
+  proof: linear_arithmetic{
+    definitions: [
+      ShippingMethod::answerExpress,
+      ShippingMethod::answerStandard,
+      ShippingMethod::destinationDomestic,
+      ShippingMethod::destinationWorldwide,
+      ShippingMethod::judge,
+      ShippingMethod::rule1,
+      ShippingMethod::rule2,
+      breaksInv002
+    ]
+  },
+  axioms: [Quot.sound, propext]
+}
+\end{semanticmodule}
+\end{lexlean}

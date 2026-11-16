@@ -18,19 +18,12 @@ The three honesty levels (R2):
 `cargo xtask audit-limits` fails if any code path returns an error the
 model does not sanction.
 
-## contract
+## shipping_method
 
 | ID | Level | Statement |
 | --- | --- | --- |
-| `TC-01` | `build` | The checker answers conformant exactly when every universal policy file's observed digest equals its locked digest |
-
-## frame
-
-| ID | Level | Statement |
-| --- | --- | --- |
-| `FR-01` | `build` | With a working worker, the page loads and verifies the archive only in that worker before using its identities or guest |
-| `FR-02` | `build` | A returning browser whose worker kept an earlier deploy serves this deploy from the navigation that brings its page |
-| `FR-03` | `build` | A first visit's bytes are counted once the page has started, the frame's and the app's each within its own budget |
+| `SM-01` | `build` | The app always answers express when destination is worldwide |
+| `SM-02` | `build` | The app never answers standard when destination is worldwide |
 
 ## Cited authorities
 
